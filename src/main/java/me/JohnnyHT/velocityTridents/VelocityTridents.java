@@ -70,7 +70,7 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
                     adjusted = true;
                     break;
                 }
-                if(adjusted) {values.add(new SynchedEntityData.DataValue<>(8, EntityDataSerializers.BYTE, bitMask));}
+                values.add(new SynchedEntityData.DataValue<>(8, EntityDataSerializers.BYTE, bitMask));
                 super.write(ctx, msg, promise);
             }
         };
@@ -105,32 +105,20 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
     @EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
         if (event.getEntity() instanceof Trident) {
-            Bukkit.broadcastMessage("Yeet 1");
-
             Trident trident = (Trident) event.getEntity();
             if (trident.getShooter() instanceof Player) {
-                Bukkit.broadcastMessage("Yeet 2");
-
                 Player player = (Player) trident.getShooter();
-                // Check if the player is in water
-                Bukkit.broadcastMessage("Yeet 3");
                 event.setCancelled(true);
                 ItemStack item = player.getInventory().getItemInMainHand();
                 if (item.getItemMeta().getCustomModelData() == 1) {
                     event.setCancelled(true);
                     if (item != null && item.getType() == Material.TRIDENT) {
                         if (player.isInWater()) {
-                            Bukkit.broadcastMessage("Yeet 4");
                             if (item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
-
                                 event.setCancelled(true);
-                                Bukkit.broadcastMessage("Yeet 5");
-
                                 Vector direction = player.getEyeLocation().getDirection().multiply(2);
                                 player.setVelocity(direction);
-
                                 addSpin(player);
-
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
