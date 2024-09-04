@@ -39,6 +39,9 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
         // Plugin shutdown logic
     }
 
+
+    // This is for removing the player from the listener
+
     private void removePlayer(Player player){
         Channel channel = ((CraftPlayer) player).getHandle().connection.connection.channel;
         channel.eventLoop().submit(()->{
@@ -49,6 +52,7 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
 
     private final Set<Integer> pleyers = ConcurrentHashMap.newKeySet();
 
+    // This is the trident Packet Method
 
     private void tridentPacketListener(Player player){
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler(){
@@ -79,16 +83,23 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
         pipeline.addBefore("packet_handler", player.getName() + "Trident", channelDuplexHandler);
     }
 
+    // Adds the player to the packet Listener when they join the server
+
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent e){
         tridentPacketListener(e.getPlayer());
     }
 
+
+    // Removes the Packet Listener when the player leaves the server this needs to be there
     @EventHandler
     public void onQuitEvent(PlayerQuitEvent e){
         removePlayer(e.getPlayer());
     }
 
+
+
+    //Gives Player the Spin Packet
 
     private void addSpin(Player player){
         pleyers.add(((CraftPlayer)player).getHandle().getId());
@@ -96,11 +107,17 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
         user.refreshEntityData(user);
     }
 
+
+    // Removes Spin packet
+
     private void removeSpin(Player player){
         pleyers.remove(((CraftPlayer)player).getHandle().getId());
         ServerPlayer user = ((CraftPlayer)player).getHandle();
         user.refreshEntityData(user);
     }
+
+
+    // This is for the using the Trident
 
     @EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
