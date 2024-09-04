@@ -1,0 +1,4 @@
+name: VelocityTridents
+version: '1.0-SNAPSHOT'
+main: me.JohnnyHT.velocityTridents.VelocityTridents
+api-version: '1.20'
