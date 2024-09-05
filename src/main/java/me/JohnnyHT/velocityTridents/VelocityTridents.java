@@ -131,7 +131,7 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
                         if (player.isInWater()) {
                             if (item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
                                 event.setCancelled(true);
-                                Vector direction = player.getEyeLocation().getDirection().multiply(2);
+                                Vector direction = player.getEyeLocation().getDirection().multiply(4);
                                 player.setVelocity(direction);
                                 addSpin(player);
                                 new BukkitRunnable() {
