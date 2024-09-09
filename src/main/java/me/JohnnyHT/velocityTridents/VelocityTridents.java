@@ -81,6 +81,8 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
         pipeline.addBefore("packet_handler", player.getName() + "Trident", channelDuplexHandler);
     }
 
+
+
     // Adds the player to the packet Listener when they join the server
 
     @EventHandler
@@ -103,6 +105,15 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
         pleyers.add(((CraftPlayer)player).getHandle().getId());
         ServerPlayer user = ((CraftPlayer)player).getHandle();
         user.refreshEntityData(user);
+    }
+
+    private void refreshAllPlayers(Player trident){
+        ServerPlayer user = ((CraftPlayer)trident).getHandle();
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ServerPlayer viewer = ((CraftPlayer)player).getHandle();
+            user.refreshEntityData(viewer);
+        }
     }
 
 
@@ -131,13 +142,14 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
                         if (player.isInWater()) {
                             if (item.hasItemMeta() && item.getItemMeta().hasCustomModelData()) {
                                 event.setCancelled(true);
-                                Vector direction = player.getEyeLocation().getDirection().multiply(4);
+                                Vector direction = player.getEyeLocation().getDirection().multiply(3);
                                 player.setVelocity(direction);
                                 addSpin(player);
                                 new BukkitRunnable() {
                                     @Override
                                     public void run() {
                                         removeSpin(player);
+                                        refreshAllPlayers(player);
                                     }
                                 }.runTaskLater(this,20);
                                 player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1.0f, 1.0f);
