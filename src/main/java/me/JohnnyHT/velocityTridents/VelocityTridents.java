@@ -61,21 +61,16 @@ public final class VelocityTridents extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
-        Bukkit.broadcastMessage("1");
         if (event.getEntity() instanceof Trident trident) {
             if (trident.getShooter() instanceof Player player) {
-                Bukkit.broadcastMessage("2");
                 ItemStack item = player.getInventory().getItemInMainHand();
                 if (item.getType() != Material.TRIDENT) {
                     return;
                 }
-                Bukkit.broadcastMessage("3");
                 var tridentConfig = tridentData.stream().filter(j -> j.match(item)).findFirst();
                 if (tridentConfig.isPresent()) {
-                    Bukkit.broadcastMessage("4");
                     event.setCancelled(true);
                     if (player.isInWater()) {
-                        Bukkit.broadcastMessage("5");
                         Vector direction = player.getEyeLocation().getDirection();
                         player.setVelocity(direction.multiply(tridentConfig.get().getVelocity()));
                         ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
