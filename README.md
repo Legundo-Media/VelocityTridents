@@ -1,3 +1,4 @@
-In short give your self a trident with a CustomModelData : 1 do not enchant it 
+In short, give yourself a trident with CustomModelData: 1. Do not enchant it.
 
-If you use this plugin for your event please give me credit JohnnyHT
+If you need help with the config, let me know.
+Thank you to Cooleg and Super Neon for their help with the process.
